@@ -7,22 +7,28 @@
     android:id="@+id/testajakok"
     tools:context="iak.rimbaborne.intermediate3.MainActivity">
 
-    <android.support.v7.widget.RecyclerView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/my_recycler_view"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:paddingBottom="16dp"
-        android:paddingTop="7dp"
-        android:scrollbars="vertical"
-        />
+        android:layout_height="wrap_content">
 
-    <!-- The main content view -->
-    <RelativeLayout
-        android:id="@+id/mainContent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <android.support.v7.widget.RecyclerView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/my_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:paddingBottom="16dp"
+            android:paddingTop="7dp"
+            android:scrollbars="vertical"
+            />
 
+        <!-- The main content view -->
+        <RelativeLayout
+            android:id="@+id/mainContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </android.support.v4.widget.DrawerLayout>

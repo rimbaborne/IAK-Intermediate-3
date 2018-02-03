@@ -1,6 +1,7 @@
 package iak.rimbaborne.intermediate3;
 
 import android.app.ProgressDialog;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -22,7 +23,7 @@ import iak.rimbaborne.intermediate3.adapter.RecyclerViewAdapter;
 
 public class MainActivity extends AppCompatActivity {
     private final String TAG = "MainActivity";
-    private final String API_Key = "api key themoviedb.org";
+    private final String API_Key = "a1f3faf95d3a6c30d3e3b20acfcdbeae";
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private RecyclerViewAdapter adapter;
@@ -31,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private ItemObject a;
 
     private ProgressDialog pDialog;
+
+    private SwipeRefreshLayout swipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,18 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
         requestJsonObject(0);
+
+        swipe = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipe.setRefreshing(true);
+                adapter.itemList.clear();
+                adapter.notifyDataSetChanged();
+                requestJsonObject(0);
+            }
+        });
+
     }
 
     private void requestJsonObject(int i) {
@@ -59,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         pDialog.setCancelable(false);
         pDialog.show();
         // Make RESTful webservice call using AsyncHttpClient object
+
         AsyncHttpClient client = new AsyncHttpClient();
 
         client.get(url, params ,new AsyncHttpResponseHandler() {
@@ -83,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
 
                 }
+
+                swipe.setRefreshing(false);
             }
             // When the response returned by REST has Http response code other than '200'
             @Override
@@ -102,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Something went wrong.", Toast.LENGTH_LONG).show();
 
                 }
+                swipe.setRefreshing(false);
             }
         });
     }
