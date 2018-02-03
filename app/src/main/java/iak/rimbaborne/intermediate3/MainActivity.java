@@ -22,7 +22,7 @@ import iak.rimbaborne.intermediate3.adapter.RecyclerViewAdapter;
 
 public class MainActivity extends AppCompatActivity {
     private final String TAG = "MainActivity";
-    private final String API_Key = "a1f3faf95d3a6c30d3e3b20acfcdbeae";
+    private final String API_Key = "api key themoviedb.org";
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private RecyclerViewAdapter adapter;
