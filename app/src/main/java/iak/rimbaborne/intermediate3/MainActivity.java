@@ -59,7 +59,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void requestJsonObject(int i) {
-        FilmCategory = "popular";
+        if (i == 0) {
+            setTitle("Popular Movie");
+            FilmCategory = "popular";
+        } else if (i == 1) {
+            setTitle("Top Rated Movie");
+            FilmCategory = "top_rated";
+        } else if (i == 2) {
+            setTitle("Coming Soon");
+            FilmCategory = "upcoming";
+        }
 
         RequestParams params = new RequestParams();
         params.put("api_key",API_Key);
@@ -67,6 +76,26 @@ public class MainActivity extends AppCompatActivity {
         MyParsingGson(params, FullURL);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.mnPopuler:
+                requestJsonObject(0); //Popular
+                break;
+            case R.id.mnFavorit:
+                requestJsonObject(1); //Top Rated
+                break;
+            case R.id.mnComing:
+                requestJsonObject(2); //Up Coming
+                break;
+            case R.id.mnAbout:
+                Toast.makeText(getApplicationContext().getApplicationContext(),
+                        "Developer by Gagang R. B ",
+                        Toast.LENGTH_LONG).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     private void MyParsingGson(RequestParams params,String url) {
         pDialog = new ProgressDialog(MainActivity.this);
@@ -123,5 +152,12 @@ public class MainActivity extends AppCompatActivity {
                 swipe.setRefreshing(false);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 }
